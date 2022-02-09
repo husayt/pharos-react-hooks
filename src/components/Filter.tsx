@@ -14,7 +14,7 @@ export default function Filter({ min, max, curFilter, setCurFilter }) {
         max={max}
         onChange={(e) => setCurFilter(+e.target.value)}
       />
-      <div className="Flex Justify-between">
+      <div className="Flex-row Justify-between">
         <span>${min}</span> <span>${max}</span>
       </div>
     </div>

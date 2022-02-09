@@ -5,6 +5,15 @@ import Filter from './components/Filter';
 
 import './App.css';
 
+function findItem(item, parent, level) {
+  let node = parent.children.find((x) => x.name === item[level]);
+  if (!node) {
+    node = { name: item[level], children: [], level };
+    parent.children.push(node);
+  }
+  return node;
+}
+
 function App() {
   const [curFilter, setCurFilter] = useState(0);
   const [min, setMin] = useState(0);
@@ -16,15 +25,6 @@ function App() {
     () => data.filter((x) => x.spend < curFilter),
     [data, curFilter]
   );
-
-  function findItem(item, parent, level) {
-    let node = parent.children.find((x) => x.name === item[level]);
-    if (!node) {
-      node = { name: item[level], children: [], level };
-      parent.children.push(node);
-    }
-    return node;
-  }
 
   function initialise(json: any[]) {
     const root = {
@@ -52,12 +52,9 @@ function App() {
   async function getData() {
     const json = await (await fetch('/src/data.json')).json();
     setData(json);
-    // console.log(data);
     initialise(json);
   }
-  // getData();
   useEffect(() => {
-    //data.value = await (await fetch('data.json')).json();
     getData();
   }, []);
 
